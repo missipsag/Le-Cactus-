@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Calendar, Clock, DollarSign, MessageSquare } from "lucide-react"
-import Header from "@/components/header"
-import Footer from "@/components/footer"
-import BackgroundElements from "@/components/background-elements"
+import BackgroundElements from "@/components/background-elements";
+import Footer from "@/components/footer";
+import Header from "@/components/header";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar, Clock, DollarSign, MessageSquare } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 interface Reservation {
   id: number
@@ -41,7 +41,7 @@ const statutLabels = {
   rejetee: "Rejetée",
 }
 
-export default function MesReservationsPage() {
+function MesReservationsPage() {
   const [user, setUser] = useState(null)
   const [reservations, setReservations] = useState<Reservation[]>([])
   const [loading, setLoading] = useState(true)
@@ -192,5 +192,13 @@ export default function MesReservationsPage() {
 
       <Footer />
     </div>
+  )
+}
+
+export default function MesReservationsPageWrapper() {
+  return (
+    <Suspense fallback={<div>Chargement...</div>}>
+      <MesReservationsPage />
+    </Suspense>
   )
 }
